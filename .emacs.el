@@ -10,6 +10,8 @@
 (set-frame-width (selected-frame) 160)
 (setq x-select-enable-clipboard t)
 
+(add-hook 'after-init-hook 'global-company-mode)
+
 ;------------------------------------------
 (auto-revert-mode t)
 
@@ -25,6 +27,9 @@
 			(visit-tags-table "../TAGS")
 			(setq auto-complete-mode t))))
 
+
+;(add-to-list 'ac-sources 'ac-source-etags)
+
 ;------------------------------------------
 ; Focus Follows Mouse
 (setq mouse-autoselect-window t)
@@ -35,21 +40,32 @@
 
 ;------------------------------------------
 ;
+; CEDET
+;
+;(semantic-mode 1)
+;(defun my:add-semantic-to-autocomplete()
+;    (add-to-list 'ac-sources 'ac-source-semantic)
+;)
+;(add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
+
+;------------------------------------------
+;
 ; dark color scheme
 ;
 
-(defun set_dark_theme()
+(defun set-theme-dark()
+	(interactive)
 	(set-background-color "#202428")
 	(set-foreground-color "#ffffff")
 	(set-face-background 'highlight  "#003040")
 	(global-hl-line-mode 1)
 	(scroll-bar-mode 0)
 	(set-face-attribute 'fringe nil :background "#505050" :foreground "#707070")
-	(set-face-foreground 'mode-line "#f0e000")
-	(set-face-background 'mode-line "#806040")
-	(set-face-foreground 'mode-line-inactive "#606060")
-	(set-face-background 'mode-line-inactive "#c0c0c0")
 	(set-face-foreground 'mode-line-buffer-id "#605040")
+	(set-face-attribute 'mode-line-inactive nil :box nil :background "#c0c0c0" :foreground "#606060")
+	(set-face-attribute 'mode-line nil :box nil :background "#806040" :foreground "#f0e000")
+
+
 	(set-face-background 'cursor "#606060")
 	(set-face-background 'region "#204060")
 
@@ -106,16 +122,91 @@
 	 '(font-lock-keyword-face 
 		((((class color)(min-colors 88) (background dark))
 		   (:foreground "#ffd0f0" )))))
+
+		(set-default-font "-unknown-Ubuntu Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 )
 
+(defun set-font-large()
+	(interactive)
+(set-default-font "-unknown-Droid Sans Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+)
+
+
+(defun set-theme-light()
+	(interactive)
+	(set-default-font "-unknown-Liberation Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+	(set-background-color "#ffffff")
+	(set-foreground-color "#000000")
+	(set-face-background 'highlight  "#f8f8f8")
+	(global-hl-line-mode 1)
+	(scroll-bar-mode 0)
+	(set-face-attribute 'fringe nil :background "#e8e8e8" :foreground "#d0d0d0")
+	(set-face-foreground 'mode-line "#f0e000")
+	(set-face-background 'mode-line "#806040")
+	(set-face-foreground 'mode-line-inactive "#606060")
+	(set-face-background 'mode-line-inactive "#c0c0c0")
+	(set-face-foreground 'mode-line-buffer-id "#808080")
+	(set-face-background 'cursor "#402000")
+	(set-face-background 'region "#80c0f0")
+	(set-face-attribute 'mode-line-inactive nil :box nil :background "#e8e8e8" :foreground "#a0a0a0")
+	(set-face-attribute 'mode-line nil :box nil :background "#d0d0d0" :foreground "#404040")
+
+	(custom-set-faces
+	 '(font-lock-comment-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#808080" :italic t))))
+	 '(font-lock-function-name-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#000000" :bold t))))
+	 '(font-lock-type-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#2040a0" ))))
+	 '(font-lock-preprocessor-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#804080" ))))
+	 '(font-lock-operator-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#800040" ))))
+	 '(font-lock-delimiter-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#800000" ))))
+
+	 '(font-lock-type-param-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#6080c0" ))))
+
+	 '(font-lock-fn-def-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#000000" :bold t))))
+	 '(font-lock-trait-def-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#000000" :bold t))))
+	 '(font-lock-enum-def-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#000000" :bold t))))
+	 '(font-lock-struct-def-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#000000" :bold t))))
+	 '(font-lock-impl-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#000000" :bold t))))
+
+	 '(font-lock-keyword-face 
+		((((class color)(min-colors 88) (background light))
+		   (:foreground "#20a060" )))))
+)
 
 (if window-system	
 	(progn
-		(set_dark_theme)
-		(set-default-font "-unknown-Droid Sans Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+		(set-theme-light)
+		(set-default-font "-unknown-Liberation Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+		(set-default-font "-unknown-Ubuntu Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 	)
 )
-
+(defun set-theme-retro()
+	(interactive)
+	(set-default-font "-xos4-Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1")
+)
 
 (custom-set-variables '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))))
 (message "initcustom emacs")
@@ -182,14 +273,21 @@
 ;(load "highlight-parenthesis.el")
 ;(load "thingatpt.el")
 
-
+(require 'compile)
 (load "cl-lib.el")
 (load "popup.el")
+(load "framemove.el")
 (load "windmove2.el")
 (load "code-definition-window.el")
 (load "auto-complete.el")
 (load "ibuffer.el")
 (load "rust-mode.el")
+(load "auto-complete-etags.el")
+(require 'etags)
+(require 'auto-complete-etags)
+(load "auto-complete-clang-extention.el")
+;(load "~/gplsrc/racer/editors/racer.el")
+
 ;(load "go-mode.el")
 ;(autoload "rust-mode.el") ;
 ;(require 'rust-mode)
@@ -198,6 +296,7 @@
 ;(load "anything.el")
 ;(load "clang-completion-mode.el")	 .. looks flaky...
 ;(load "auto-complete-clang-async.el")
+
 
 
 ;(slime-setup)
@@ -221,7 +320,7 @@
 (setq-default c-basic-offset 4 tab-width 4 indent-tabs-mode t)
 (setq c-default-style "k&r")
 
-(defun set_light_theme()
+(defun set-theme-light()
 	(set-background-color "#ffffff")
 	(set-foreground-color "#000000")
 	(set-face-background 'highlight  "#f0f0ff")
@@ -305,8 +404,8 @@
 ; editing modes
 
 (defun my-common-mode()
-	(auto-complete-mode)
 	(setq indent-tabs-mode t)
+	(local-set-key (kbd "<tab>") 'tab-to-tab-stop)
 )
 
 ;------------------------------------------
@@ -324,6 +423,7 @@
 (add-hook 'c-mode-common-hook
 	(lambda()
 		(my-common-mode)	
+		(company-mode)
 		(setq indent-tabs-mode t c-basic-offset 4 tab-width 4)
 		(setq c-backspace-function 'backward-delete-char)  
 		(setq c-electric-backspace 'backward-delete-char)
@@ -337,7 +437,10 @@
 (add-hook 'rust-mode-hook 
 	(lambda()
 		(my-common-mode)
+		(auto-complete-mode) ; bog standard text-completion
 		(setq indent-tabs-mode t)
+		(local-set-key (kbd "<tab>") 'tab-to-tab-stop)
+
 	)
 )
 
@@ -351,6 +454,11 @@
 ; clojure modes
 
 (add-hook 'clojure-mode-hook (lambda()(my-common-mode)))
+
+;------------------------------------------
+; makefiles
+
+(add-hook 'makefile-mode-hook (lambda()(my-common-mode)))
 
 
 ;-------------------------------------------
@@ -398,7 +506,7 @@
 (global-set-key (kbd "M-o") 'cpph-open-src-h)
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "S-C-s") 'write-file)
-(global-set-key (kbd "C-S-s") 'rename-file-and-buffer)
+(global-set-key (kbd "C-M-s") 'rename-file-and-buffer)
 (message "init 0.6")
 
 (global-set-key (kbd "C-f") 'isearch-forward)
@@ -416,7 +524,6 @@
 (global-set-key (kbd "C-<tab>") 'ibuffer)
 (global-set-key (kbd "C-w") 'kill-buffer-force)
 (global-set-key (kbd "C-n") 'new-source-header)
-(global-set-key (kbd "C-S-s") 'write-file)
 (global-set-key (kbd "C-<kp-prior>") 'previous-buffer)
 (global-set-key (kbd "C-<kp-next>") 'next-buffer)
 (global-set-key (kbd "M-<kp-next>") 'next-multiframe-window)
@@ -450,10 +557,15 @@
 (global-set-key (kbd "<f1> z") 'delete-other-windows)
 (message "init 0.7")
 
-(global-set-key (kbd "<f5>")	'gdb)
+(defun save-and-compile()
+    (interactive)(save-some-buffers 1) ( compile "make"))
+(defun save-and-debug()
+    (interactive)(save-some-buffers 1) ( compile "make debug") ('gdb))
+
+(global-set-key (kbd "<f5>")	'save-and-debug)
 (global-set-key (kbd "C-<f5>")	'gud-cont)
-(global-set-key (kbd "<f7>")	(lambda()(interactive)(compile "make")))
-(global-set-key (kbd "<C-f7>")	(lambda()(interactive)(compile)))
+(global-set-key (kbd "<f7>")	'save-and-compile)
+(global-set-key (kbd "<C-f7>")	'save-and-compile)
 (global-set-key (kbd "<f4>")	'next-error)
 (global-set-key (kbd "<f9>")	'gud-break)
 (global-set-key (kbd "<f10>")	'gud-next)
@@ -644,8 +756,8 @@
 
 (message "init1")
 (defun get-num-windows() (safe-length (get-window-list)))
-(global-set-key (kbd "<f1> <left>") (lambda()(interactive)(if (>= (get-num-windows) 2) (windmove-left) (split-window-horizontally))))
-(global-set-key (kbd "<f1> <right>") (lambda()(interactive)(if (>= (get-num-windows) 2) (windmove-right) (split-window-horizontally))))
+;(global-set-key (kbd "<f1> <left>") (lambda()(interactive)(if (>= (get-num-windows) 2) (windmove-left) (split-window-horizontally))))
+;(global-set-key (kbd "<f1> <right>") (lambda()(interactive)(if (>= (get-num-windows) 2) (windmove-right) (split-window-horizontally))))
 
 (global-set-key (kbd "<f1> <f2>") 'split-window-smart)
 

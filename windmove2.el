@@ -133,6 +133,7 @@
 
 ;; If your Emacs sometimes places an empty column between two adjacent
 ;; windows, you may wish to set this delta to 2.
+(require 'framemove)
 (defvar windmove-window-distance-delta 1
   "How far away from the current window to look for an adjacent window.
 Measured in characters either horizontally or vertically; setting this
@@ -392,12 +393,11 @@ If no window is at direction DIR, an error is signaled."
 (defun windmove-off-edge(dir arg window)
 
 	(cond
-		((eq dir 'up)	(split-window))	
-		((eq dir 'down)	(split-window) (windmove-do-window-select dir arg window))
-		((eq dir 'left)	(split-window-horizontally))
-		((eq dir 'right)(split-window-horizontally)(windmove-do-window-select dir arg window))
+		((eq dir 'up)	(fm-up-frame))	
+		((eq dir 'down)	(fm-down-frame))
+		((eq dir 'left)	(fm-left-frame))
+		((eq dir 'right)(fm-right-frame))
 	)
-
 )
 
 ;;; end-user functions

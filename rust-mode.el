@@ -432,6 +432,8 @@ This is written mainly to be used as `end-of-defun-function' for Rust."
 
 (provide 'rust-mode)
 
+
+
 ;; Issue #6887: Rather than inheriting the 'gnu compilation error
 ;; regexp (which is broken on a few edge cases), add our own 'rust
 ;; compilation error regexp and use it instead.
@@ -451,11 +453,10 @@ See `compilation-error-regexp-alist for help on their format.")
 
 (eval-after-load 'compile
   '(progn
-;TODO - fix this! we have something old ?
-;     (add-to-list 'compilation-error-regexp-alist-alist
-;                  (cons 'rustc rustc-compilation-regexps))
-;     (add-to-list 'compilation-error-regexp-alist 'rustc))
-	)
-)
+     (add-to-list 'compilation-error-regexp-alist-alist
+                  (cons 'rustc rustc-compilation-regexps))
+     (add-to-list 'compilation-error-regexp-alist 'rustc)))
+
+
 
 ;;; rust-mode.el ends here
