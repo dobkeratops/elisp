@@ -1004,11 +1004,10 @@ electric-pairs) prepare for writing the body of something"
 (add-hook 'lisp-mode-hook 'add-custom-keyw)
 (delete-other-windows)
 (dired default-directory)
-(dired "/usr/include/GL")
-(dired "~/gplsrc/rust")
-(dired "~/android-ndk-r9b")
-(dired "~")
-(dired "./")
+(setq default-dirs '("/usr/include/GL" "~/gplsrc/rust" "~/rustfind" "~/android_rust_gl" "~/android-ndk-r9b" "~/cardemo" "~" "~/elisp"))
+(mapcar (lambda(x) (if (file-exists-p x) (dired x))) default-dirs)
+
+
 
 ;-----------------------------------
 
@@ -1106,3 +1105,5 @@ electric-pairs) prepare for writing the body of something"
 					(lambda(w)(set-code-def-window w)))))))
 )
 
+(buffer-menu)
+(delete-other-windows)
