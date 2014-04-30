@@ -1,13 +1,15 @@
 ;------------------------------------------
+;
 ; menu bar, Gui settings..
 ; disable the menu-bar
+;
 (tool-bar-mode	0)
 (menu-bar-mode	0)
 (setq inhibit-startup-buffer-menu t)
 (setq inhibit-startup-screen t)
 (setq inhibit-startup-message t)
-(set-frame-height (selected-frame) 50)
-(set-frame-width (selected-frame) 160)
+;(set-frame-height (selected-frame) 50)
+;(set-frame-width (selected-frame) 160)
 (setq x-select-enable-clipboard t)
 
 (add-hook 'after-init-hook 'global-company-mode)
@@ -286,6 +288,9 @@
 (require 'etags)
 (require 'auto-complete-etags)
 (load "auto-complete-clang-extention.el")
+
+(load "exec-path-from-shell.el")
+(exec-path-from-shell-copy-envs '("PATH"))
 ;(load "~/gplsrc/racer/editors/racer.el")
 
 ;(load "go-mode.el")
@@ -553,6 +558,24 @@
 (global-set-key (kbd "<f1> C-<next>") 'new-frame)
 (global-set-key (kbd "<f1> C-<prior>") 'new-frame)
 (global-set-key (kbd "<f1> d") 'enable-code-def-window)
+
+;-- Symmetry with OSX keyboard layout, we need this for sanity on an apple laptop
+(global-set-key (kbd "s-<left>") 'beginning-of-line)
+(global-set-key (kbd "s-<right>") 'end-of-line)
+(global-set-key (kbd "s-<up>") 'beginning-of-buffer)
+(global-set-key (kbd "s-<down>") 'end-of-buffer)
+(global-set-key (kbd "s-c") 'cua-copy-region)
+(global-set-key (kbd "s-x") 'cua-cut-region)
+(global-set-key (kbd "s-v") 'cua-paste-region)
+(global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-a") 'mark-whole-buffer)
+(global-set-key (kbd "s-o") 'find-file)
+(global-set-key (kbd "S-s-s") 'write-file)
+(global-set-key (kbd "s-s") 'save-buffer)
+(global-set-key (kbd "s-f") 'isearch-forward)
+(global-set-key (kbd "S-s-f") 'isearch-backward)
+(global-set-key (kbd "s-q") 'save-buffers-kill-terminal)
+
 
 (global-set-key (kbd "<f1> z") 'delete-other-windows)
 (message "init 0.7")
