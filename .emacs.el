@@ -564,9 +564,13 @@
 (global-set-key (kbd "s-<right>") 'end-of-line)
 (global-set-key (kbd "s-<up>") 'beginning-of-buffer)
 (global-set-key (kbd "s-<down>") 'end-of-buffer)
-(global-set-key (kbd "s-c") 'cua-copy-region)
-(global-set-key (kbd "s-x") 'cua-cut-region)
-(global-set-key (kbd "s-v") 'cua-paste-region)
+;(global-set-key (kbd "s-c") 'cua-copy-region)
+;(global-set-key (kbd "s-x") 'cua-cut-region)
+(global-set-key (kbd "C-c") 'my-copy-region)
+;(global-set-key (kbd "C-x") 'my-cut-region) ; If we overide this we lose all emacs
+(global-set-key (kbd "s-c") 'my-copy-region)
+(global-set-key (kbd "s-x") 'my-cut-region)
+(global-set-key (kbd "s-v") 'cua-paste)
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
 (global-set-key (kbd "s-o") 'find-file)
@@ -575,7 +579,6 @@
 (global-set-key (kbd "s-f") 'isearch-forward)
 (global-set-key (kbd "S-s-f") 'isearch-backward)
 (global-set-key (kbd "s-q") 'save-buffers-kill-terminal)
-
 
 (global-set-key (kbd "<f1> z") 'delete-other-windows)
 (message "init 0.7")
@@ -618,7 +621,7 @@
 (global-set-key (kbd "C-<kp-end>") 'end-of-buffer)
 (global-set-key (kbd "C-i") 'goto-line)
 (setf backward-delete-char-untabify-method nil)
-;(global-set-key (kbd "<tab>") 'tab-to-tab-stop)	
+(global-set-key (kbd "<tab>") 'tab-to-tab-stop)
 
 ;-------------------------------------------
 ; obselete modes
@@ -632,31 +635,36 @@
 (auto-complete t)
 (setf ac-auto-start 1)
 
-
-		
-(global-set-key (kbd "<kp-add>") (lambda()
+; copy line or copy selection
+(defun my-copy-region()
 	(interactive)
 		(if (region-active-p) 
 			(progn	
-				(print "foobar")
-				(message "%d-%d" (region-beginning)(region-end))
+				(message "Copy %d-%d" (region-beginning)(region-end))
 				(kill-ring-save (region-beginning)(region-end)))
+			;else
 			(progn
+				(message "Copy" (what-line))
 				(beginning-of-line)
 				(kill-whole-line)
 				(yank)
-				(previous-line)))))
+				(previous-line))))
 
-
-
-(global-set-key (kbd "<kp-subtract>") 
-	(lambda()
-		(interactive)
-			(if (region-active-p)
-				(kill-region(region-beginning)(region-end))
-			:else
+(defun my-cut-region()
+	(interactive)
+		(if (region-active-p)
+			(progn	
+				(message "Cut %d-%d" (region-beginning)(region-end))	
+				(kill-region(region-beginning)(region-end)))
+		:else
+			(progn	
+				(message "Cut %s" (what-line))
 				(beginning-of-line)
-				(kill-line))))
+				(kill-whole-line))))
+
+(global-set-key (kbd "<kp-add>") 'my-copy-region)
+(global-set-key (kbd "<kp-subtract>") 'my-cut-region)
+
 (defun rotate-list(ls)(append (rest ls)(list (first ls))))
 (global-set-key (kbd "<insert>") 
 	(lambda()
@@ -859,7 +867,7 @@ electric-pairs) prepare for writing the body of something"
   (define-key paredit-mode-map (kbd "M-<down>") nil)
   (define-key paredit-mode-map (kbd "M-<left>") nil)
   (define-key paredit-mode-map (kbd "M-<right>") nil)
-  (define-key paredit-mode-map (kbd "TAB") nil)
+;  (define-key paredit-mode-map (kbd "TAB") nil)
 ;  (define-key paredit-mode-map (kbd "C-i") nil)
   (define-key paredit-mode-map (kbd ")" ) 'paredit-split-sexp)
 ))
